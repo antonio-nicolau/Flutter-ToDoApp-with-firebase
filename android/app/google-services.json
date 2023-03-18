@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "530237795512",
+    "project_id": "flutter-firebase-and-riverpod",
+    "storage_bucket": "flutter-firebase-and-riverpod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530237795512:android:d02b3e549fb30bfa17984d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_cloud_firestore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530237795512-o5tqqt4ni32pgmifoijpi1jaq7aijurv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEB_1gfZ3InD9jDphhFcrFbqcCx2BYTL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530237795512-o5tqqt4ni32pgmifoijpi1jaq7aijurv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
