@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cloud_firestore/core/models/user.model.dart';
+import 'package:flutter_cloud_firestore/core/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_textfield.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,11 +11,14 @@ class AuthPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final emailEdittingController = TextEditingController();
     final passwordEdittingController = TextEditingController();
-    final aboutEdittingController = TextEditingController();
 
     void login() {
       final email = emailEdittingController.text.trim();
       final password = passwordEdittingController.text.trim();
+
+      final user = UserModel(email: email, password: password);
+
+      ref.read(authRepositoryProvider).login(user);
     }
 
     return Scaffold(
