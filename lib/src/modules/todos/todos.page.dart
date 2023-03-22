@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/add_todo.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class TodosPage extends ConsumerWidget {
   const TodosPage({super.key});
 

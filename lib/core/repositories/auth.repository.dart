@@ -22,7 +22,7 @@ class AuthRepository implements IAuthRepository {
   Future<bool> login(UserModel user) async {
     try {
       final response = await _firebaseAuth.signInWithEmailAndPassword(email: user.email, password: user.password);
-      return response.user == null;
+      return response.user != null;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':

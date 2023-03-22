@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/src/modules/auth/auth.page.dart';
+import 'package:flutter_cloud_firestore/core/router/app.route.dart';
 
+@RoutePage()
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -20,10 +22,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AuthPage()),
-                );
+                context.router.push(const AuthRoute());
               },
               child: const Text('Login'),
             ),
