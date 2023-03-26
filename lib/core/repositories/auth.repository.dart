@@ -9,8 +9,18 @@ final authRepositoryProvider = Provider<IAuthRepository>((ref) {
   return AuthRepository(FirebaseAuth.instance);
 });
 
-final authStatusProvider = StreamProvider<User?>((ref) {
-  return ref.watch(authRepositoryProvider).authStatus();
+final authStatusProvider = StreamProvider<String?>((ref) {
+  ref.watch(authRepositoryProvider).authStatus().listen((event) {
+    ref.invalidate(isAuthenticatedProvider);
+  });
+
+  return ref.watch(authRepositoryProvider).authStatus().map((user) {
+    return user?.email;
+  });
+});
+
+final isAuthenticatedProvider = StateProvider<bool>((ref) {
+  return ref.read(authRepositoryProvider).currentUser()?.email != null;
 });
 
 class AuthRepository implements IAuthRepository {
@@ -49,4 +59,7 @@ class AuthRepository implements IAuthRepository {
   Stream<User?> authStatus() {
     return _firebaseAuth.authStateChanges();
   }
+
+  @override
+  User? currentUser() => _firebaseAuth.currentUser;
 }

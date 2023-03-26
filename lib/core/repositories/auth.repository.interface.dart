@@ -5,4 +5,5 @@ abstract class IAuthRepository {
   Future<bool> login(UserModel user);
   void logout();
   Stream<User?> authStatus();
+  User? currentUser();
 }
