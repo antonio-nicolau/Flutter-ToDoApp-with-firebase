@@ -3,6 +3,7 @@
 A Flutter TODO App to show how to work with Rivepord, Firebase and auto_router
 
 You can learn how to:
+- implement firebase auth
 - query firebase cloud storage documents, update and delete
 - manage stream providers with Riverpod
 - repository pattern
@@ -12,5 +13,6 @@ You can learn how to:
 
 
 
-https://user-images.githubusercontent.com/67912928/227825103-c08da8ae-2326-4f2a-b50d-b223e8b1cbcf.mov
+
+https://user-images.githubusercontent.com/67912928/227932389-ce82aa81-6df3-47f4-a5f9-5474f0dbd956.mov
 
