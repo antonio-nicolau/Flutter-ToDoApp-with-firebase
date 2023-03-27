@@ -17,7 +17,11 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
         iconTheme: const IconThemeData(color: Color(0xff9D9AB4)),
         textTheme: const TextTheme(
-          headlineLarge: TextStyle(color: Color(0xff9D9AB4)),
+          headlineLarge: TextStyle(color: Color(0xff020417)),
+          headlineMedium: TextStyle(color: Color(0xff9D9AB4)),
+          headlineSmall: TextStyle(color: Color(0xff9D9AB4)),
+          titleMedium: TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold),
+          titleSmall: TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold),
         ),
       ),
       debugShowCheckedModeBanner: false,

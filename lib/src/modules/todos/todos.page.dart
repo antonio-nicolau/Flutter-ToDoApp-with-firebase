@@ -40,8 +40,15 @@ class TodosPage extends ConsumerWidget {
               ref.read(authRepositoryProvider).logout();
             },
             icon: const Icon(
+              Icons.search_rounded,
+              color: Color(0xff9D9AB4),
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
               Icons.notifications_none,
-              color: Colors.black,
+              color: Color(0xff9D9AB4),
             ),
           ),
         ],
@@ -57,7 +64,14 @@ class TodosPage extends ConsumerWidget {
                 "What's up, António",
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
+              const TodoCategories(),
+              const SizedBox(height: 40),
+              Text(
+                "TODA'S TASKS",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 16),
               todosAsyncvalue.when(
                 data: (data) {
                   final docs = data.docs;
@@ -160,6 +174,54 @@ class ListItem extends ConsumerWidget {
       onDismissed: (direction) {
         ref.read(todoCloudFirestoreRepositoryProvider).delete(docId);
       },
+    );
+  }
+}
+
+final categories = ['Business', 'Personal', 'Reading', 'Hang out'];
+
+class TodoCategories extends ConsumerWidget {
+  const TodoCategories({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "CATEGORIES",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 100,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: categories.length,
+            itemBuilder: (context, index) {
+              final category = categories[index];
+              return Container(
+                width: 160,
+                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('20 tasks', style: Theme.of(context).textTheme.titleSmall),
+                    const SizedBox(height: 16),
+                    Text(category, style: Theme.of(context).textTheme.titleLarge),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
