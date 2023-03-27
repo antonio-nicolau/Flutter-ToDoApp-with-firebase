@@ -1,16 +1,16 @@
-# flutter_cloud_firestore
+# Flutter Todo App With Firebase
 
-A new Flutter project.
+A Flutter TODO App to show how to work with Rivepord, Firebase and auto_router
+
+You can learn how to:
+- query firebase cloud storage documents, update and delete
+- manage stream providers with Riverpod
+- repository pattern
+- router management with auto_router
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+https://user-images.githubusercontent.com/67912928/227825103-c08da8ae-2326-4f2a-b50d-b223e8b1cbcf.mov
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
