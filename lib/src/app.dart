@@ -12,9 +12,10 @@ class MyApp extends ConsumerWidget {
     final isAuthenticated = ref.watch(isAuthenticatedProvider);
 
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'Todo App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        iconTheme: const IconThemeData(color: Color(0xff9D9AB4)),
       ),
       debugShowCheckedModeBanner: false,
       routerConfig: ref.read(appRouterProvider).config(
