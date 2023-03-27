@@ -16,6 +16,9 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         iconTheme: const IconThemeData(color: Color(0xff9D9AB4)),
+        textTheme: const TextTheme(
+          headlineLarge: TextStyle(color: Color(0xff9D9AB4)),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       routerConfig: ref.read(appRouterProvider).config(

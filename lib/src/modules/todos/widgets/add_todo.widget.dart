@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
@@ -10,55 +11,89 @@ class AddTodo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final titleEdittingController = TextEditingController();
-    final subtitleEdittingController = TextEditingController();
-    final aboutEdittingController = TextEditingController();
 
     void addTodo() {
       final title = titleEdittingController.text.trim();
-      final subtitle = subtitleEdittingController.text.trim();
-      final about = aboutEdittingController.text.trim();
 
-      final todo = Todo(title: title, subtitle: subtitle, about: about);
+      final todo = Todo(title: title);
       ref.read(todoCloudFirestoreRepositoryProvider).add(todo);
+      Navigator.pop(context);
     }
 
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Add a new todo',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            TodoTextField(
-              controller: titleEdittingController,
-              label: 'Title',
-            ),
-            const SizedBox(height: 16),
-            TodoTextField(
-              controller: subtitleEdittingController,
-              label: 'Sub-Title',
-            ),
-            const SizedBox(height: 16),
-            TodoTextField(
-              controller: aboutEdittingController,
-              hintText: 'About',
-              minLines: 5,
-              maxLines: 15,
-            ),
-            const SizedBox(height: 16),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: addTodo,
-                child: const Text('Save'),
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 2, color: const Color(0xff9D9AB4)),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  margin: const EdgeInsets.only(right: 20, top: 32),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.close_sharp,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
               ),
-            )
-          ],
+              Container(
+                height: MediaQuery.of(context).size.height,
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TodoTextField(
+                      controller: titleEdittingController,
+                      label: 'Enter new task',
+                      minLines: 5,
+                      maxLines: 15,
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(const Color(0xffF4F6FD)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          side: const BorderSide(color: Color(0xff9D9AB4)),
+                        )),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.calendar_today_outlined, color: Color(0xff9D9AB4)),
+                            SizedBox(width: 10),
+                            Text(
+                              'Today',
+                              style: TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: addTodo,
+        label: const Text('New task'),
+        icon: const Icon(Icons.keyboard_arrow_up_rounded),
       ),
     );
   }

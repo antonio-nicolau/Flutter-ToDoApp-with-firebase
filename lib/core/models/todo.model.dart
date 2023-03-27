@@ -1,13 +1,13 @@
 class Todo {
   final String title;
-  final String subtitle;
-  final String about;
+  final String? subtitle;
+  final String? about;
   final bool done;
 
   Todo({
     required this.title,
-    required this.subtitle,
-    required this.about,
+    this.subtitle,
+    this.about,
     this.done = false,
   });
 

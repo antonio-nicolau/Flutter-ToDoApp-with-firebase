@@ -19,9 +19,13 @@ class TodosPage extends ConsumerWidget {
     void displayModal() {
       showModalBottomSheet(
         isDismissible: true,
+        isScrollControlled: true,
         context: context,
         builder: (context) {
-          return const AddTodo();
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: const AddTodo(),
+          );
         },
       );
     }
@@ -50,7 +54,7 @@ class TodosPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "What's up, ${user?.displayName}",
+                "What's up, António",
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               const SizedBox(height: 20),

@@ -24,10 +24,10 @@ class TodoTextField extends StatelessWidget {
       decoration: InputDecoration(
         label: Text(label ?? ''),
         hintText: hintText,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: Theme.of(context).primaryColor),
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-        ),
+        labelStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xff9D9AB4)),
+        hintStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xff9D9AB4)),
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
       ),
       minLines: minLines,
       maxLines: maxLines ?? 1,
