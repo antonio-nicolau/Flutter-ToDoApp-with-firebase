@@ -16,6 +16,7 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       routerConfig: ref.read(appRouterProvider).config(
         initialRoutes: [
           if (isAuthenticated) const TodosRoute() else const HomeRoute(),

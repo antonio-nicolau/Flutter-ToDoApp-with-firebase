@@ -30,4 +30,9 @@ class TodoCloudFirestoreRepository implements ICloudFirestoreRepository {
   Future<void> delete(String uuid) async {
     _db.collection('todos').doc(uuid).delete();
   }
+
+  @override
+  Future<void> updateTodo(String uuid, Todo todo) async {
+    _db.collection('todos').doc(uuid).update(todo.toMap());
+  }
 }

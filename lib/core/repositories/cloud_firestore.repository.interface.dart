@@ -5,4 +5,5 @@ abstract class ICloudFirestoreRepository {
   Stream<QuerySnapshot> getTodos();
   Future<void> add(Todo todo);
   Future<void> delete(String uuid);
+  Future<void> updateTodo(String uuid, Todo todo);
 }

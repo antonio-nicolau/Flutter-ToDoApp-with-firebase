@@ -23,6 +23,6 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: HomeRoute.page),
         AutoRoute(page: AuthRoute.page),
-        AutoRoute(page: TodosRoute.page, guards: [AuthGuard(_ref)]),
+        AutoRoute(page: TodosRoute.page),
       ];
 }
