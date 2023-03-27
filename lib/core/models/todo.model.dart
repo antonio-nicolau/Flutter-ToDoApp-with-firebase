@@ -1,40 +1,36 @@
 class Todo {
   final String title;
-  final String? subtitle;
-  final String? about;
+
   final bool done;
+  final DateTime schedule;
 
   Todo({
     required this.title,
-    this.subtitle,
-    this.about,
     this.done = false,
+    required this.schedule,
   });
 
   factory Todo.fromMap(Map<String, dynamic> data) {
     return Todo(
       title: data['title'],
-      subtitle: data['subtitle'],
-      about: data['about'],
       done: data['done'] ?? false,
+      schedule: DateTime.tryParse(data['schedule'] ?? '') ?? DateTime.now(),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'title': title,
-      'subtitle': subtitle,
-      'about': about,
       'done': done,
+      'schedule': schedule.toIso8601String(),
     };
   }
 
-  Todo copyWith({String? title, String? subtitle, String? about, bool? done}) {
+  Todo copyWith({String? title, DateTime? schedule, bool? done}) {
     return Todo(
       title: title ?? this.title,
-      subtitle: subtitle ?? this.subtitle,
-      about: about ?? this.about,
       done: done ?? this.done,
+      schedule: schedule ?? this.schedule,
     );
   }
 }

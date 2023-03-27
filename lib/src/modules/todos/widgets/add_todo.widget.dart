@@ -7,31 +7,39 @@ import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_textfield
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+final selectedDateProvider = StateProvider.autoDispose<DateTime?>((ref) {
+  return null;
+});
+
 class AddTodo extends ConsumerWidget {
-  const AddTodo({super.key});
+  AddTodo({super.key});
+
+  static final _formKey = GlobalKey<FormState>();
+  final titleEdittingController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final titleEdittingController = TextEditingController();
-    final dateEdittingController = TextEditingController();
+    final dateFormat = DateFormat('yyyy-MM-dd');
+    final selectedDate = ref.watch(selectedDateProvider);
 
     void addTodo() {
       final title = titleEdittingController.text.trim();
 
-      final todo = Todo(title: title);
+      final todo = Todo(title: title, schedule: selectedDate ?? DateTime.now());
+      print('data:$selectedDate');
+      print(todo.toMap());
       ref.read(todoCloudFirestoreRepositoryProvider).add(todo);
       Navigator.pop(context);
     }
 
-    void openCalendar(BuildContext context, TextEditingController controller) {
-      final dateFormat = DateFormat('yyyy-MM-dd');
+    void openCalendar(BuildContext context) {
       TodoDatePicker(
         context: context,
-        controller: controller,
+        controller: TextEditingController(),
         firstDate: DateTime.now(),
         dateFormat: dateFormat,
         onChanged: (date) {
-          controller.text = dateFormat.format(date);
+          ref.read(selectedDateProvider.notifier).state = date;
         },
       ).show();
     }
@@ -39,72 +47,70 @@ class AddTodo extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: const Color(0xff9D9AB4)),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  margin: const EdgeInsets.only(right: 20, top: 32),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.close_sharp,
-                      color: Colors.black,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: const Color(0xff9D9AB4)),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    margin: const EdgeInsets.only(right: 20, top: 32),
+                    child: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.close_sharp, color: Colors.black),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height,
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TodoTextField(
-                      controller: titleEdittingController,
-                      label: 'Enter new task',
-                      minLines: 5,
-                      maxLines: 15,
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () => openCalendar(context, dateEdittingController),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(const Color(0xffF4F6FD)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
-                            side: const BorderSide(color: Color(0xff9D9AB4)),
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TodoTextField(
+                        controller: titleEdittingController,
+                        label: 'Enter new task',
+                        minLines: 5,
+                        maxLines: 15,
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () => openCalendar(context),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(const Color(0xffF4F6FD)),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                              side: const BorderSide(color: Color(0xff9D9AB4)),
+                            ),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.calendar_today_outlined, color: Color(0xff9D9AB4)),
+                              const SizedBox(width: 10),
+                              Text(
+                                displayDate(dateFormat, selectedDate),
+                                style: const TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.calendar_today_outlined, color: Color(0xff9D9AB4)),
-                            const SizedBox(width: 10),
-                            Text(
-                              dateEdittingController.text.isEmpty ? 'Today' : dateEdittingController.text,
-                              style: const TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -114,5 +120,12 @@ class AddTodo extends ConsumerWidget {
         icon: const Icon(Icons.keyboard_arrow_up_rounded),
       ),
     );
+  }
+
+  String displayDate(DateFormat dateFormat, DateTime? selectedDate) {
+    if (selectedDate == null || selectedDate == DateTime.now()) {
+      return 'Today';
+    }
+    return dateFormat.format(selectedDate);
   }
 }

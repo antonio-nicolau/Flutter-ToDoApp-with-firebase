@@ -24,7 +24,7 @@ class TodosPage extends ConsumerWidget {
         builder: (context) {
           return SizedBox(
             height: MediaQuery.of(context).size.height * 0.8,
-            child: const AddTodo(),
+            child: AddTodo(),
           );
         },
       );
