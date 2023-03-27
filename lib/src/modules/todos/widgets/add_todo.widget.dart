@@ -2,8 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
+import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_date_picker.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_textfield.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class AddTodo extends ConsumerWidget {
   const AddTodo({super.key});
@@ -11,6 +13,7 @@ class AddTodo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final titleEdittingController = TextEditingController();
+    final dateEdittingController = TextEditingController();
 
     void addTodo() {
       final title = titleEdittingController.text.trim();
@@ -18,6 +21,19 @@ class AddTodo extends ConsumerWidget {
       final todo = Todo(title: title);
       ref.read(todoCloudFirestoreRepositoryProvider).add(todo);
       Navigator.pop(context);
+    }
+
+    void openCalendar(BuildContext context, TextEditingController controller) {
+      final dateFormat = DateFormat('yyyy-MM-dd');
+      TodoDatePicker(
+        context: context,
+        controller: controller,
+        firstDate: DateTime.now(),
+        dateFormat: dateFormat,
+        onChanged: (date) {
+          controller.text = dateFormat.format(date);
+        },
+      ).show();
     }
 
     return Scaffold(
@@ -60,24 +76,26 @@ class AddTodo extends ConsumerWidget {
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => openCalendar(context, dateEdittingController),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(const Color(0xffF4F6FD)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
-                          side: const BorderSide(color: Color(0xff9D9AB4)),
-                        )),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                            side: const BorderSide(color: Color(0xff9D9AB4)),
+                          ),
+                        ),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(10),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.calendar_today_outlined, color: Color(0xff9D9AB4)),
-                            SizedBox(width: 10),
+                            const Icon(Icons.calendar_today_outlined, color: Color(0xff9D9AB4)),
+                            const SizedBox(width: 10),
                             Text(
-                              'Today',
-                              style: TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold, fontSize: 16),
+                              dateEdittingController.text.isEmpty ? 'Today' : dateEdittingController.text,
+                              style: const TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ],
                         ),

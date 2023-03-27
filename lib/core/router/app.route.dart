@@ -5,7 +5,6 @@ import 'package:flutter_cloud_firestore/src/modules/auth/auth.page.dart';
 import 'package:flutter_cloud_firestore/src/modules/home/home.page.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/todos.page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app.route.gr.dart';
 
