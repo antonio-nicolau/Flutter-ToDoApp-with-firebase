@@ -26,8 +26,6 @@ class AddTodo extends ConsumerWidget {
       final title = titleEdittingController.text.trim();
 
       final todo = Todo(title: title, schedule: selectedDate ?? DateTime.now());
-      print('data:$selectedDate');
-      print(todo.toMap());
       ref.read(todoCloudFirestoreRepositoryProvider).add(todo);
       Navigator.pop(context);
     }
