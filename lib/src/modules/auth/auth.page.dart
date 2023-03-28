@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/models/user.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/core/router/app.route.dart';
+import 'package:flutter_cloud_firestore/core/widgets/todo_elevated_button.widget.dart';
+import 'package:flutter_cloud_firestore/src/modules/auth/widgets/social_media.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_textfield.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,41 +33,76 @@ class AuthPage extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: const Color(0xffF1F0F6),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Login to your account',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              TodoTextField(
-                controller: emailEdittingController,
-                label: 'Email',
-              ),
-              const SizedBox(height: 16),
-              TodoTextField(
-                controller: passwordEdittingController,
-                label: 'Password',
-              ),
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text('Do not have an account yet? create one'),
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Hello Again!',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: login,
-                child: const Text('Login'),
-              ),
-            ],
+                const SizedBox(height: 16),
+                Text(
+                  "Welcome back you've been missed",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 30),
+                TodoTextField(
+                  textInputType: TextInputType.emailAddress,
+                  controller: emailEdittingController,
+                  label: 'Enter username',
+                  labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
+                ),
+                const SizedBox(height: 16),
+                TodoTextField(
+                  controller: passwordEdittingController,
+                  label: 'Password',
+                  obscureText: true,
+                  labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
+                ),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Recover Password',
+                      style: TextStyle(
+                        color: Color(0xff9D9AB4),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TodoElevatedButton(
+                  backgroundColor: const Color(0xffE1372D),
+                  elevation: 0,
+                  onPressed: login,
+                  child: const Text('Sign in'),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 40, bottom: 40),
+                  child: SocialMediaLogin(),
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Not a member?'),
+                    SizedBox(width: 10),
+                    Text(
+                      'Register now',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

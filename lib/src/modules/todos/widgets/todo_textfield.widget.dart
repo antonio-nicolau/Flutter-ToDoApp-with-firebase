@@ -8,6 +8,11 @@ class TodoTextField extends StatelessWidget {
     this.minLines,
     this.maxLines,
     this.hintText,
+    this.enableBorder = true,
+    this.obscureText = false,
+    this.hintTextStyle,
+    this.textInputType,
+    this.labelTextStyle,
     this.onChanged,
   });
   final TextEditingController controller;
@@ -15,22 +20,36 @@ class TodoTextField extends StatelessWidget {
   final String? hintText;
   final int? minLines;
   final int? maxLines;
+  final bool enableBorder;
   final Function(String value)? onChanged;
+  final TextStyle? hintTextStyle;
+  final TextStyle? labelTextStyle;
+  final TextInputType? textInputType;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      keyboardType: textInputType ?? TextInputType.text,
       decoration: InputDecoration(
         label: Text(label ?? ''),
         hintText: hintText,
-        labelStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xff9D9AB4)),
-        hintStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xff9D9AB4)),
+        filled: true,
+        fillColor: Colors.white,
+        labelStyle: labelTextStyle ?? Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xff9D9AB4)),
+        hintStyle: hintTextStyle ?? Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xff9D9AB4)),
         focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
+        enabledBorder: enableBorder == true
+            ? OutlineInputBorder(
+                borderSide: const BorderSide(width: 1, color: Colors.white),
+                borderRadius: BorderRadius.circular(16),
+              )
+            : InputBorder.none,
       ),
       minLines: minLines,
       maxLines: maxLines ?? 1,
+      obscureText: obscureText,
       onChanged: onChanged,
     );
   }

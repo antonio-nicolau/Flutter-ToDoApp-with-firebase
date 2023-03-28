@@ -76,6 +76,7 @@ class AddTodo extends ConsumerWidget {
                         label: 'Enter new task',
                         minLines: 5,
                         maxLines: 15,
+                        enableBorder: false,
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(

@@ -23,11 +23,12 @@ class MyApp extends ConsumerWidget {
           titleMedium: TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold),
           titleSmall: TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold),
         ),
+        dividerColor: const Color(0xff9D9AB4),
       ),
       debugShowCheckedModeBanner: false,
       routerConfig: ref.read(appRouterProvider).config(
         initialRoutes: [
-          if (isAuthenticated) const TodosRoute() else const HomeRoute(),
+          if (isAuthenticated) const AuthRoute() else const AuthRoute(),
         ],
       ),
     );
