@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
                       Expanded(
                         child: TodoElevatedButton(
                           onPressed: () {
-                            context.router.push(const AuthRoute());
+                            context.router.push(const RegisterRoute());
                           },
                           borderRadius: 8,
                           padding: const EdgeInsets.all(16),

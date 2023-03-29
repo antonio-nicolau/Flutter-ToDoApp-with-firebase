@@ -39,7 +39,12 @@ class TodoTextField extends StatelessWidget {
         fillColor: Colors.white,
         labelStyle: labelTextStyle ?? Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xff9D9AB4)),
         hintStyle: hintTextStyle ?? Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xff9D9AB4)),
-        focusedBorder: InputBorder.none,
+        focusedBorder: enableBorder == true
+            ? OutlineInputBorder(
+                borderSide: const BorderSide(width: 1, color: Colors.white),
+                borderRadius: BorderRadius.circular(16),
+              )
+            : InputBorder.none,
         enabledBorder: enableBorder == true
             ? OutlineInputBorder(
                 borderSide: const BorderSide(width: 1, color: Colors.white),
