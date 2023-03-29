@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';

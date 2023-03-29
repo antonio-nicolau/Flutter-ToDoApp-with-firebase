@@ -8,4 +8,5 @@ abstract class ICloudFirestoreRepository {
   Future<void> delete(String uuid);
   Future<void> updateTodo(String uuid, Todo todo);
   Future<void> saveUserProfile(UserModel user);
+  Future<UserModel> getUserProfile();
 }

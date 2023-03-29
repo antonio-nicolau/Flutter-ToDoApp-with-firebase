@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_cloud_firestore/core/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/core/router/app.route.dart';
@@ -12,7 +10,7 @@ class AuthGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    if (_ref.read(authStatusProvider).value != null) {
+    if (_ref.read(isAuthenticatedProvider)) {
       resolver.next(true);
     } else {
       router.push(const HomeRoute());

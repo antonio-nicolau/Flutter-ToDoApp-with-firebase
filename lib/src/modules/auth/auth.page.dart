@@ -17,7 +17,7 @@ class AuthPage extends ConsumerWidget {
     final emailEdittingController = TextEditingController();
     final passwordEdittingController = TextEditingController();
 
-    Future<void> login() async {
+    Future<void> signInWithEmailAndPassword() async {
       final email = emailEdittingController.text.trim();
       final password = passwordEdittingController.text.trim();
 
@@ -83,7 +83,7 @@ class AuthPage extends ConsumerWidget {
                 TodoElevatedButton(
                   backgroundColor: const Color(0xffE1372D),
                   elevation: 0,
-                  onPressed: login,
+                  onPressed: signInWithEmailAndPassword,
                   child: const Text('Sign in'),
                 ),
                 const Padding(

@@ -4,7 +4,7 @@ import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/add_todo.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_search_delegate.widget.dart';
-import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_categories.widget.dart';
+import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_header.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_item.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -57,12 +57,7 @@ class TodosPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                "What's up, António",
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-              const SizedBox(height: 40),
-              const TodoCategories(),
+              const TodosHeader(),
               const SizedBox(height: 40),
               Text(
                 "TODAY'S TASKS",
