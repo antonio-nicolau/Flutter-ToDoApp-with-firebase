@@ -23,14 +23,16 @@ class RegisterPage extends ConsumerWidget {
       final email = emailEdittingController.text.trim();
       final password = passwordEdittingController.text.trim();
 
-      final user = UserModel(email: email, password: password);
+      final user = UserModel(
+        name: name,
+        email: email,
+        password: password,
+      );
 
-      final response = await ref.read(authRepositoryProvider).login(user);
+      await ref.read(authRepositoryProvider).signUpWithEmailAndPassword(user);
 
       if (context.mounted) {
-        if (response) {
-          context.router.push(const TodosRoute());
-        }
+        context.router.push(const AuthRoute());
       }
     }
 

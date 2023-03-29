@@ -23,7 +23,7 @@ class AuthPage extends ConsumerWidget {
 
       final user = UserModel(email: email, password: password);
 
-      final response = await ref.read(authRepositoryProvider).login(user);
+      final response = await ref.read(authRepositoryProvider).signInWithEmailAndPassword(user);
 
       if (context.mounted) {
         if (response) {

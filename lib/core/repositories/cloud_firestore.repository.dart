@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
+import 'package:flutter_cloud_firestore/core/models/user.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.interface.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -34,5 +35,10 @@ class TodoCloudFirestoreRepository implements ICloudFirestoreRepository {
   @override
   Future<void> updateTodo(String uuid, Todo todo) async {
     _db.collection('todos').doc(uuid).update(todo.toJson());
+  }
+
+  @override
+  Future<void> saveUserProfile(UserModel user) async {
+    await _db.collection('users').add(user.toJson());
   }
 }

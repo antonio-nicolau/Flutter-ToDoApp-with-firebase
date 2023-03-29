@@ -15,7 +15,7 @@ class AuthGuard extends AutoRouteGuard {
     if (_ref.read(authStatusProvider).value != null) {
       resolver.next(true);
     } else {
-      router.push(const AuthRoute());
+      router.push(const HomeRoute());
     }
   }
 }
