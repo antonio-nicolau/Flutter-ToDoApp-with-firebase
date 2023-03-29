@@ -28,7 +28,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: ref.read(appRouterProvider).config(
         initialRoutes: [
-          if (isAuthenticated) const AuthRoute() else const AuthRoute(),
+          if (isAuthenticated) const TodosRoute() else const HomeRoute(),
         ],
       ),
     );
