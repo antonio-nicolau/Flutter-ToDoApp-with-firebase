@@ -23,7 +23,7 @@ class TodoCloudFirestoreRepository implements ICloudFirestoreRepository {
 
   @override
   Future<void> add(Todo todo) async {
-    await _db.collection('todos').add(todo.toMap());
+    await _db.collection('todos').add(todo.toJson());
   }
 
   @override
@@ -33,6 +33,6 @@ class TodoCloudFirestoreRepository implements ICloudFirestoreRepository {
 
   @override
   Future<void> updateTodo(String uuid, Todo todo) async {
-    _db.collection('todos').doc(uuid).update(todo.toMap());
+    _db.collection('todos').doc(uuid).update(todo.toJson());
   }
 }

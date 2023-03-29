@@ -40,7 +40,7 @@ class TodosPage extends ConsumerWidget {
               showSearch(
                   context: context,
                   delegate: CustomSearchDelegate(
-                      todosAsyncvalue.asData!.value.docs.map((e) => Todo.fromMap(e.data() as Map<String, dynamic>)).toList()));
+                      todosAsyncvalue.asData!.value.docs.map((e) => Todo.fromJson(e.data() as Map<String, dynamic>)).toList()));
             },
             icon: const Icon(Icons.search_rounded, color: Color(0xff9D9AB4)),
           ),
@@ -72,7 +72,7 @@ class TodosPage extends ConsumerWidget {
               todosAsyncvalue.when(
                 data: (data) {
                   final docs = data.docs;
-                  final todos = docs.map((e) => Todo.fromMap(e.data() as Map<String, dynamic>)).toList();
+                  final todos = docs.map((e) => Todo.fromJson(e.data() as Map<String, dynamic>)).toList();
 
                   return ListView.builder(
                     shrinkWrap: true,
