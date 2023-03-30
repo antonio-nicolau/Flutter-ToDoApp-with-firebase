@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_date_picker.widget.dart';
-import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_textfield.widget.dart';
+import 'package:flutter_cloud_firestore/core/widgets/todo_textfield.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
