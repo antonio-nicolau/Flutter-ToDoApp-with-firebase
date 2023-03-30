@@ -42,6 +42,7 @@ class AddTodo extends ConsumerWidget {
     }
 
     return Scaffold(
+      backgroundColor: const Color(0xffF1F0F6),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -76,6 +77,7 @@ class AddTodo extends ConsumerWidget {
                         minLines: 5,
                         maxLines: 15,
                         enableBorder: false,
+                        fillColor: const Color(0xffF1F0F6),
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
@@ -104,6 +106,29 @@ class AddTodo extends ConsumerWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 70),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.create_new_folder_outlined),
+                            iconSize: 38,
+                          ),
+                          const SizedBox(width: 24),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.flag),
+                            iconSize: 38,
+                          ),
+                          const SizedBox(width: 24),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.dark_mode_outlined),
+                            iconSize: 38,
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

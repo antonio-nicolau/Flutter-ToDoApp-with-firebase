@@ -67,6 +67,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: TodoElevatedButton(
                           onPressed: () {

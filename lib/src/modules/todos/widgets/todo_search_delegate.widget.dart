@@ -19,6 +19,13 @@ class CustomSearchDelegate extends SearchDelegate {
   }
 
   @override
+  ThemeData appBarTheme(BuildContext context) {
+    return super.appBarTheme(context).copyWith(
+          appBarTheme: const AppBarTheme(elevation: 0),
+        );
+  }
+
+  @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () {
@@ -40,8 +47,11 @@ class CustomSearchDelegate extends SearchDelegate {
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {
         var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListTile(
+            title: Text(result),
+          ),
         );
       },
     );

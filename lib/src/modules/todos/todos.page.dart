@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
-import 'package:flutter_cloud_firestore/src/modules/todos/widgets/add_todo.widget.dart';
+import 'package:flutter_cloud_firestore/src/modules/add_todo/pages/add_todo.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_search_delegate.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_side_menu.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_header.widget.dart';
@@ -25,7 +25,7 @@ class TodosPage extends ConsumerWidget {
         context: context,
         builder: (context) {
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.8,
+            height: MediaQuery.of(context).size.height * 0.85,
             child: AddTodo(),
           );
         },
@@ -58,7 +58,7 @@ class TodosPage extends ConsumerWidget {
                 child: Scaffold(
                   appBar: AppBar(
                     elevation: 0,
-                    backgroundColor: Colors.white.withOpacity(0),
+                    backgroundColor: const Color(0xffF1F0F6).withOpacity(0.5),
                     leading: IconButton(
                       onPressed: () {
                         ref.read(menuOpenedProvider.notifier).state = !ref.read(menuOpenedProvider);

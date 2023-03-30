@@ -1,5 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cloud_firestore/core/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
+import 'package:flutter_cloud_firestore/core/router/app.route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final menuOpenedProvider = StateProvider<bool>((ref) {
@@ -69,6 +72,16 @@ class TodoSideMenu extends ConsumerWidget {
             title: "Templates",
             onTap: () {},
           ),
+          MyListTile(
+            icon: Icons.logout_outlined,
+            title: "Logout",
+            iconColor: Colors.red,
+            titleColor: Colors.red,
+            onTap: () {
+              ref.read(authRepositoryProvider).logout();
+              context.router.push(const AuthRoute());
+            },
+          ),
         ],
       ),
     );
@@ -79,19 +92,24 @@ class MyListTile extends ConsumerWidget {
   final IconData? icon;
   final String? title;
   final VoidCallback? onTap;
+  final Color? iconColor;
+  final Color? titleColor;
 
-  const MyListTile({super.key, this.title, this.icon, this.onTap});
+  const MyListTile({super.key, this.title, this.titleColor, this.icon, this.iconColor, this.onTap});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Row(
         children: [
-          Icon(icon, size: 30),
+          Icon(icon, size: 30, color: iconColor),
           const SizedBox(width: 16),
           GestureDetector(
             onTap: onTap,
-            child: Text("$title", style: Theme.of(context).textTheme.titleMedium),
+            child: Text(
+              "$title",
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: titleColor),
+            ),
           ),
         ],
       ),
