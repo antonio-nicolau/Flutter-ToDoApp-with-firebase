@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/core/router/app.route.dart';
+import 'package:flutter_cloud_firestore/core/utils/dark_theme.dart';
+import 'package:flutter_cloud_firestore/core/utils/theme_preferences.dart';
+import 'package:flutter_cloud_firestore/core/utils/light_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyApp extends ConsumerWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  @override
+  void initState() {
+    checkIfIsDarkTheme();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDarkTheme = ref.watch(isDarkThemeProvider);
     final isAuthenticated = ref.watch(isAuthenticatedProvider);
 
     return MaterialApp.router(
       title: 'Todo App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        iconTheme: const IconThemeData(color: Color(0xff9D9AB4)),
-        textTheme: const TextTheme(
-          headlineLarge: TextStyle(color: Color(0xff020417)),
-          headlineMedium: TextStyle(color: Color(0xff9D9AB4)),
-          headlineSmall: TextStyle(color: Color(0xff9D9AB4)),
-          titleMedium: TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold),
-          titleSmall: TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold),
-        ),
-        dividerColor: const Color(0xff9D9AB4),
-      ),
+      theme: isDarkTheme ? darkTheme(context) : lightTheme(context),
       debugShowCheckedModeBanner: false,
       routerConfig: ref.read(appRouterProvider).config(
         initialRoutes: [
@@ -31,5 +35,11 @@ class MyApp extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  void checkIfIsDarkTheme() {
+    DarkThemePreference().getTheme().then((value) {
+      ref.read(isDarkThemeProvider.notifier).state = value;
+    });
   }
 }

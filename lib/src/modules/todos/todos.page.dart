@@ -33,7 +33,7 @@ class TodosPage extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xffF1F0F6),
+      backgroundColor: Theme.of(context).primaryColor,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Stack(
@@ -48,7 +48,7 @@ class TodosPage extends ConsumerWidget {
               height: isOpen ? MediaQuery.of(context).size.height * 0.85 : MediaQuery.of(context).size.height,
               top: isOpen ? 50.0 : 0,
               right: isOpen ? -260 : 0,
-              duration: const Duration(seconds: 1),
+              duration: const Duration(milliseconds: 600),
               curve: Curves.fastOutSlowIn,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -58,12 +58,12 @@ class TodosPage extends ConsumerWidget {
                 child: Scaffold(
                   appBar: AppBar(
                     elevation: 0,
-                    backgroundColor: const Color(0xffF1F0F6).withOpacity(0.5),
+                    backgroundColor: Theme.of(context).primaryColor,
                     leading: IconButton(
                       onPressed: () {
                         ref.read(menuOpenedProvider.notifier).state = !ref.read(menuOpenedProvider);
                       },
-                      icon: const Icon(Icons.menu, color: Color(0xff9D9AB4)),
+                      icon: Icon(isOpen ? Icons.close_rounded : Icons.menu),
                     ),
                     actions: [
                       IconButton(
@@ -73,18 +73,18 @@ class TodosPage extends ConsumerWidget {
                               delegate: CustomSearchDelegate(
                                   todosAsyncValue.asData!.value.docs.map((e) => Todo.fromJson(e.data() as Map<String, dynamic>)).toList()));
                         },
-                        icon: const Icon(Icons.search_rounded, color: Color(0xff9D9AB4)),
+                        icon: const Icon(Icons.search_rounded),
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.notifications_none, color: Color(0xff9D9AB4)),
+                        icon: const Icon(Icons.notifications_none),
                       ),
                     ],
                   ),
                   body: SingleChildScrollView(
                     child: Container(
                       padding: const EdgeInsets.all(16),
-                      color: const Color(0xffF4F6FD),
+                      color: Theme.of(context).primaryColor,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[

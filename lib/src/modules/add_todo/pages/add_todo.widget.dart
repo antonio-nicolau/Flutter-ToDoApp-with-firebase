@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
+import 'package:flutter_cloud_firestore/core/utils/theme_preferences.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_date_picker.widget.dart';
 import 'package:flutter_cloud_firestore/core/widgets/todo_textfield.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,7 @@ class AddTodo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(isDarkThemeProvider);
     final dateFormat = DateFormat('yyyy-MM-dd');
     final selectedDate = ref.watch(selectedDateProvider);
 
@@ -42,7 +44,7 @@ class AddTodo extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xffF1F0F6),
+      backgroundColor: isDarkTheme ? const Color(0xff0E1D36) : Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -61,7 +63,7 @@ class AddTodo extends ConsumerWidget {
                     margin: const EdgeInsets.only(right: 20, top: 32),
                     child: IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.close_sharp, color: Colors.black),
+                      icon: const Icon(Icons.close_sharp),
                     ),
                   ),
                 ),
@@ -76,8 +78,7 @@ class AddTodo extends ConsumerWidget {
                         label: 'Enter new task',
                         minLines: 5,
                         maxLines: 15,
-                        enableBorder: false,
-                        fillColor: const Color(0xffF1F0F6),
+                        fillColor: Theme.of(context).primaryColor,
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
@@ -123,8 +124,11 @@ class AddTodo extends ConsumerWidget {
                           ),
                           const SizedBox(width: 24),
                           IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.dark_mode_outlined),
+                            onPressed: () {
+                              ref.read(themePreferencesProvider).setDarkTheme(!isDarkTheme);
+                              ref.read(isDarkThemeProvider.notifier).state = !isDarkTheme;
+                            },
+                            icon: Icon(isDarkTheme ? Icons.light_mode_outlined : Icons.dark_mode_outlined),
                             iconSize: 38,
                           ),
                         ],

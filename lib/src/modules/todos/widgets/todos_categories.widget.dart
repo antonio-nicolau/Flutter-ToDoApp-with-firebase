@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cloud_firestore/core/utils/app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final categories = ['Business', 'Personal', 'Reading', 'Hang out'];
@@ -8,6 +9,8 @@ class TodoCategories extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,7 +40,12 @@ class TodoCategories extends ConsumerWidget {
                   children: [
                     Text('20 tasks', style: Theme.of(context).textTheme.titleSmall),
                     const SizedBox(height: 16),
-                    Text(category, style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      category,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: isDarkTheme ? const Color(0xff020417) : const Color(0xff020417),
+                          ),
+                    ),
                   ],
                 ),
               );

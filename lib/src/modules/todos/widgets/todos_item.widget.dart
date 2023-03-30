@@ -55,7 +55,7 @@ class TodoListItem extends ConsumerWidget {
         child: ListTile(
           title: Text(
             todo.title,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           leading: Checkbox(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
