@@ -14,6 +14,7 @@ final authRepositoryProvider = Provider<IAuthRepository>((ref) {
 
 final authStatusProvider = StreamProvider<String?>((ref) {
   ref.watch(authRepositoryProvider).authStatus().listen((event) {
+    print('event:${event?.email}');
     ref.read(isAuthenticatedProvider.notifier).state = event?.email != null;
   });
 

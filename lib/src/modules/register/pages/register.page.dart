@@ -58,20 +58,20 @@ class RegisterPage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 TodoTextField(
-                  textInputType: TextInputType.emailAddress,
                   controller: nameEdittingController,
                   label: 'Your name',
                   labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
                 ),
                 const SizedBox(height: 30),
                 TodoTextField(
-                  textInputType: TextInputType.emailAddress,
+                  textInputType: TodoTextInputType.email,
                   controller: emailEdittingController,
                   label: 'Enter username',
                   labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
                 ),
                 const SizedBox(height: 16),
                 TodoTextField(
+                  textInputType: TodoTextInputType.password,
                   controller: passwordEdittingController,
                   label: 'Password',
                   obscureText: true,
