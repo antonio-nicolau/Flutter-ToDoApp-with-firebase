@@ -5,23 +5,25 @@ import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
 import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_elevated_button.widget.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/social_media.widget.dart';
-import 'package:flutter_cloud_firestore/src/core/widgets/todo_textfield.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/auth/repositories/auth.repository.dart';
+import 'package:flutter_cloud_firestore/src/modules/auth/widgets/auth_form.widget.dart';
+import 'package:flutter_cloud_firestore/src/modules/auth/widgets/auth_header.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
 class AuthPage extends ConsumerWidget {
   const AuthPage({super.key});
 
+  static final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final requestStatus = ref.watch(authRequestStatusProvider);
-    final emailEdittingController = TextEditingController();
-    final passwordEdittingController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
     Future<void> signInWithEmailAndPassword() async {
-      final email = emailEdittingController.text.trim();
-      final password = passwordEdittingController.text.trim();
+      final email = emailController.text.trim();
+      final password = passwordController.text.trim();
 
       final user = UserModel(email: email, password: password);
 
@@ -52,31 +54,12 @@ class AuthPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Hello Again!',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "Welcome back you've been missed",
-                  style: Theme.of(context).textTheme.headlineSmall,
-                  textAlign: TextAlign.center,
-                ),
+                const AuthHeader(),
                 const SizedBox(height: 30),
-                TodoTextField(
-                  textInputType: TodoTextInputType.email,
-                  controller: emailEdittingController,
-                  label: 'Enter username',
-                  labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
-                ),
-                const SizedBox(height: 16),
-                TodoTextField(
-                  textInputType: TodoTextInputType.password,
-                  controller: passwordEdittingController,
-                  label: 'Password',
-                  obscureText: true,
-                  labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
+                AuthForm(
+                  formKey: _formKey,
+                  emailController: emailController,
+                  passwordController: passwordController,
                 ),
                 const SizedBox(height: 8),
                 Align(
@@ -95,6 +78,7 @@ class AuthPage extends ConsumerWidget {
                 TodoElevatedButton(
                   backgroundColor: const Color(0xffE1372D),
                   elevation: 0,
+                  enable: requestStatus != RequestStatus.loading,
                   onPressed: signInWithEmailAndPassword,
                   child: requestStatus != RequestStatus.loading ? const Text('Sign in') : buttonSpinner(),
                 ),

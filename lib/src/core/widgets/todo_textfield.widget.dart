@@ -75,7 +75,7 @@ class TodoTextField extends ConsumerWidget {
       ),
       minLines: minLines,
       maxLines: maxLines ?? 1,
-      obscureText: showPassword,
+      obscureText: isPasswordField && !showPassword,
       onChanged: onChanged,
     );
   }

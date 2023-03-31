@@ -5,31 +5,30 @@ import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
 import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_elevated_button.widget.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/social_media.widget.dart';
-import 'package:flutter_cloud_firestore/src/core/widgets/todo_textfield.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/sign_up/repositories/sign_up.repository.dart';
+import 'package:flutter_cloud_firestore/src/modules/sign_up/widgets/sign_up_form.widget.dart';
+import 'package:flutter_cloud_firestore/src/modules/sign_up/widgets/sign_up_header.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
 class SignUpPage extends ConsumerWidget {
   const SignUpPage({super.key});
 
+  static final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final requestStatus = ref.watch(signUpRequestStatusProvider);
-    final nameEdittingController = TextEditingController();
-    final emailEdittingController = TextEditingController();
-    final passwordEdittingController = TextEditingController();
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
-    Future<void> register() async {
-      final name = nameEdittingController.text.trim();
-      final email = emailEdittingController.text.trim();
-      final password = passwordEdittingController.text.trim();
+    Future<void> signUpWithPassword() async {
+      final name = nameController.text.trim();
+      final email = emailController.text.trim();
+      final password = passwordController.text.trim();
 
-      final user = UserModel(
-        name: name,
-        email: email,
-        password: password,
-      );
+      final user = UserModel(name: name, email: email, password: password);
 
       await ref.read(signUpRepositoryProvider).signUpWithEmailAndPassword(user);
 
@@ -55,65 +54,20 @@ class SignUpPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  "Hi here! Let's",
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "get started",
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
-                  textAlign: TextAlign.center,
-                ),
+                const SignUpHeader(),
                 const SizedBox(height: 30),
-                TodoTextField(
-                  controller: nameEdittingController,
-                  label: 'Your name',
-                  labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
-                ),
-                const SizedBox(height: 30),
-                TodoTextField(
-                  textInputType: TodoTextInputType.email,
-                  controller: emailEdittingController,
-                  label: 'Enter username',
-                  labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
-                ),
-                const SizedBox(height: 16),
-                TodoTextField(
-                  textInputType: TodoTextInputType.password,
-                  controller: passwordEdittingController,
-                  label: 'Password',
-                  obscureText: true,
-                  labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
-                ),
-                const SizedBox(height: 8),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
-                  child: Wrap(
-                    children: [
-                      Text(
-                        'By singing up, you agree to the',
-                        style: TextStyle(color: Color(0xff9D9AB4)),
-                      ),
-                      SizedBox(width: 8),
-                      UnderlineText(text: 'Terms of Service'),
-                      SizedBox(width: 8),
-                      Text(
-                        'and',
-                        style: TextStyle(color: Color(0xff9D9AB4)),
-                      ),
-                      SizedBox(width: 8),
-                      UnderlineText(text: 'Privacy Policy'),
-                    ],
-                  ),
+                SignUpForm(
+                  formKey: _formKey,
+                  nameController: nameController,
+                  emailController: emailController,
+                  passwordController: passwordController,
                 ),
                 const SizedBox(height: 16),
                 TodoElevatedButton(
                   enable: requestStatus != RequestStatus.loading,
                   backgroundColor: const Color(0xffE1372D),
                   elevation: 0,
-                  onPressed: register,
+                  onPressed: signUpWithPassword,
                   child: requestStatus != RequestStatus.loading ? const Text('Sign up') : buttonSpinner(),
                 ),
                 const Padding(
@@ -125,25 +79,6 @@ class SignUpPage extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class UnderlineText extends StatelessWidget {
-  const UnderlineText({super.key, required this.text, this.textStyle});
-
-  final String text;
-  final TextStyle? textStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: textStyle ??
-          const TextStyle(
-            color: Color(0xff9D9AB4),
-            decoration: TextDecoration.underline,
-          ),
     );
   }
 }
