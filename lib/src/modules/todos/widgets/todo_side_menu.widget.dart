@@ -4,6 +4,7 @@ import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.re
 import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
 import 'package:flutter_cloud_firestore/src/modules/auth/repositories/auth.repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final sideMenuOpenedProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
@@ -54,33 +55,35 @@ class TodoSideMenu extends ConsumerWidget {
           const SizedBox(height: 30),
           MyListTile(
             icon: Icons.book,
-            title: "Templates",
+            title: AppLocalizations.of(context)!.menu_templates,
             onTap: () {},
           ),
           MyListTile(
             icon: Icons.category_outlined,
-            title: "Categories",
+            title: AppLocalizations.of(context)!.categories,
             onTap: () {},
           ),
           MyListTile(
             icon: Icons.analytics,
-            title: "Analytics",
+            title: AppLocalizations.of(context)!.menu_analytics,
             onTap: () {},
           ),
           MyListTile(
             icon: Icons.settings,
-            title: "Settings",
+            title: AppLocalizations.of(context)!.menu_settings,
             onTap: () {},
           ),
           MyListTile(
             icon: Icons.logout_outlined,
-            title: "Logout",
+            title: AppLocalizations.of(context)!.menu_logout,
             iconColor: Colors.red,
             titleColor: Colors.red,
             onTap: () {
               ref.read(authRepositoryProvider).logout();
               context.router.push(const HomeRoute());
               ref.invalidate(sideMenuOpenedProvider);
+              ref.invalidate(cloudFirestoreRepositoryProvider);
+              ref.invalidate(getTodosProvider);
             },
           ),
         ],

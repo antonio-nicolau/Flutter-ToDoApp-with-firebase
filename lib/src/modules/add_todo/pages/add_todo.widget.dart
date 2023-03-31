@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/src/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
 import 'package:flutter_cloud_firestore/src/core/utils/theme_preferences.dart';
+import 'package:flutter_cloud_firestore/src/modules/auth/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_date_picker.widget.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_textfield.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final selectedDateProvider = StateProvider.autoDispose<DateTime?>((ref) {
   return null;
@@ -24,11 +26,19 @@ class AddTodo extends ConsumerWidget {
     final selectedDate = ref.watch(selectedDateProvider);
 
     void addTodo() {
-      final title = titleEdittingController.text.trim();
+      final userId = ref.read(authRepositoryProvider).currentUser()?.uid;
 
-      final todo = Todo(title: title, schedule: selectedDate ?? DateTime.now());
-      ref.read(cloudFirestoreRepositoryProvider).add(todo);
-      Navigator.pop(context);
+      if (userId != null) {
+        final title = titleEdittingController.text.trim();
+
+        final todo = Todo(
+          userId: userId,
+          title: title,
+          schedule: selectedDate ?? DateTime.now(),
+        );
+        ref.read(cloudFirestoreRepositoryProvider).add(todo);
+        Navigator.pop(context);
+      }
     }
 
     void openCalendar(BuildContext context) {
@@ -75,7 +85,7 @@ class AddTodo extends ConsumerWidget {
                     children: [
                       TodoTextField(
                         controller: titleEdittingController,
-                        label: 'Enter new task',
+                        label: AppLocalizations.of(context)!.add_new_todo_hint_text,
                         minLines: 5,
                         maxLines: 15,
                         fillColor: Theme.of(context).primaryColor,
@@ -100,7 +110,7 @@ class AddTodo extends ConsumerWidget {
                               const Icon(Icons.calendar_today_outlined, color: Color(0xff9D9AB4)),
                               const SizedBox(width: 10),
                               Text(
-                                displayDate(dateFormat, selectedDate),
+                                displayDate(context, dateFormat, selectedDate),
                                 style: const TextStyle(color: Color(0xff9D9AB4), fontWeight: FontWeight.bold, fontSize: 16),
                               ),
                             ],
@@ -143,15 +153,15 @@ class AddTodo extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: addTodo,
-        label: const Text('New task'),
+        label: Text(AppLocalizations.of(context)!.new_todo_btn),
         icon: const Icon(Icons.keyboard_arrow_up_rounded),
       ),
     );
   }
 
-  String displayDate(DateFormat dateFormat, DateTime? selectedDate) {
+  String displayDate(BuildContext context, DateFormat dateFormat, DateTime? selectedDate) {
     if (selectedDate == null || selectedDate == DateTime.now()) {
-      return 'Today';
+      return AppLocalizations.of(context)!.today_btn;
     }
     return dateFormat.format(selectedDate);
   }

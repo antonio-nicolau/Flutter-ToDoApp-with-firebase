@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_categories.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TodosHeader extends ConsumerWidget {
   const TodosHeader({super.key});
@@ -15,7 +16,7 @@ class TodosHeader extends ConsumerWidget {
         userAsyncValue.when(
           data: (user) {
             return Text(
-              "What's up, ${user.name}",
+              "${AppLocalizations.of(context)!.whats_up}, ${user.name}",
               style: Theme.of(context).textTheme.headlineLarge,
             );
           },

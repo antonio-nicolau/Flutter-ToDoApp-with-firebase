@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/src/core/constants/enums.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_textfield.widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthForm extends StatelessWidget {
   const AuthForm({
@@ -23,14 +24,14 @@ class AuthForm extends StatelessWidget {
           TodoTextField(
             textInputType: TodoTextInputType.email,
             controller: emailController,
-            label: 'Enter username',
+            label: AppLocalizations.of(context)!.enter_username,
             labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
           ),
           const SizedBox(height: 16),
           TodoTextField(
             textInputType: TodoTextInputType.password,
             controller: passwordController,
-            label: 'Password',
+            label: AppLocalizations.of(context)!.password,
             obscureText: true,
             labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
           ),

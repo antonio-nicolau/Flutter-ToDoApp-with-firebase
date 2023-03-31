@@ -9,6 +9,7 @@ import 'package:flutter_cloud_firestore/src/modules/sign_up/repositories/sign_up
 import 'package:flutter_cloud_firestore/src/modules/sign_up/widgets/sign_up_form.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/sign_up/widgets/sign_up_header.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class SignUpPage extends ConsumerWidget {
@@ -41,14 +42,14 @@ class SignUpPage extends ConsumerWidget {
 
     ref.listen<RequestStatus>(signUpRequestStatusProvider, (previous, next) {
       if (next == RequestStatus.error) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Error while creating account'),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.error_creating_account),
         ));
       }
     });
 
     return Scaffold(
-      backgroundColor: const Color(0xffF1F0F6),
+      backgroundColor: Theme.of(context).primaryColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
@@ -70,7 +71,7 @@ class SignUpPage extends ConsumerWidget {
                   backgroundColor: const Color(0xffE1372D),
                   elevation: 0,
                   onPressed: signUpWithPassword,
-                  child: requestStatus != RequestStatus.loading ? const Text('Sign up') : buttonSpinner(),
+                  child: requestStatus != RequestStatus.loading ? Text(AppLocalizations.of(context)!.sign_up_btn) : buttonSpinner(),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 40, bottom: 40),

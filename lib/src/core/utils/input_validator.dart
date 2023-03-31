@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class InputValidator {
-  InputValidator();
+  final BuildContext _buildContext;
+  InputValidator(this._buildContext);
 
   final _emailRegex = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9|-]+\.[a-zA-Z]+";
   final _passwordRegex = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*^[^~*?%<>]*$).{6,32}$";
@@ -9,29 +13,16 @@ class InputValidator {
     String? password,
   }) {
     if (email != null && !isEmailValid(email)) {
-      return 'Introduce a valid email';
+      return AppLocalizations.of(_buildContext)!.error_invalid_email;
     } else if (password != null && !isPasswordValid(password)) {
-      return 'Introduce a valid password';
+      return AppLocalizations.of(_buildContext)!.error_invalid_password;
     }
-    return null;
-  }
-
-  String? validatePassword({
-    String? password,
-    String? passwordToMatch,
-  }) {
-    if (!isPasswordValid(password)) {
-      return 'Password must contains at least 6 letters';
-    }
-
     return null;
   }
 
   bool isPasswordValid(String? password) {
     return RegExp(_passwordRegex).hasMatch(password.toString());
   }
-
-  bool? isEmpty(String? value) => value?.trim().isEmpty;
 
   bool isEmailValid(String? email) {
     return RegExp(_emailRegex).hasMatch(email.toString());

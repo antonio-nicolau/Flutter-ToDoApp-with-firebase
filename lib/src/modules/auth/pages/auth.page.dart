@@ -9,6 +9,7 @@ import 'package:flutter_cloud_firestore/src/modules/auth/repositories/auth.repos
 import 'package:flutter_cloud_firestore/src/modules/auth/widgets/auth_form.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/auth/widgets/auth_header.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class AuthPage extends ConsumerWidget {
@@ -41,14 +42,14 @@ class AuthPage extends ConsumerWidget {
 
     ref.listen<RequestStatus>(authRequestStatusProvider, (previous, next) {
       if (next == RequestStatus.error) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Email or password incorrect'),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.error_email_or_password_incorrect),
         ));
       }
     });
 
     return Scaffold(
-      backgroundColor: const Color(0xffF1F0F6),
+      backgroundColor: Theme.of(context).primaryColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
@@ -68,9 +69,9 @@ class AuthPage extends ConsumerWidget {
                   alignment: Alignment.bottomRight,
                   child: TextButton(
                     onPressed: () {},
-                    child: const Text(
-                      'Recover Password',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.recover_password,
+                      style: const TextStyle(
                         color: Color(0xff9D9AB4),
                       ),
                     ),
@@ -82,20 +83,28 @@ class AuthPage extends ConsumerWidget {
                   elevation: 0,
                   enable: requestStatus != RequestStatus.loading,
                   onPressed: signInWithEmailAndPassword,
-                  child: requestStatus != RequestStatus.loading ? const Text('Sign in') : buttonSpinner(),
+                  child: requestStatus != RequestStatus.loading ? Text(AppLocalizations.of(context)!.sign_in) : buttonSpinner(),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 40, bottom: 40),
                   child: SocialMediaLogin(),
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Not a member?'),
-                    SizedBox(width: 10),
                     Text(
-                      'Register now',
-                      style: TextStyle(color: Colors.blue),
+                      AppLocalizations.of(context)!.no_a_member,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () => context.router.push(
+                        const SignUpRoute(),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.register_now,
+                        style: const TextStyle(color: Colors.blue),
+                      ),
                     ),
                   ],
                 )

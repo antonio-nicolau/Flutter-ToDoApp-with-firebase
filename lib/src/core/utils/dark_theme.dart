@@ -22,7 +22,7 @@ ThemeData darkTheme(BuildContext context) {
     textTheme: const TextTheme(
       headlineLarge: TextStyle(color: Colors.white),
       headlineMedium: TextStyle(color: Color(0xff020417)),
-      headlineSmall: TextStyle(color: Color(0xff020417)),
+      headlineSmall: TextStyle(color: Colors.white),
       titleMedium: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,

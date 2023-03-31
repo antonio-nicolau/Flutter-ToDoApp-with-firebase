@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_elevated_button.widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -31,19 +32,19 @@ class HomePage extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Discover your',
+                    AppLocalizations.of(context)!.home_title_1,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Best task manager here',
+                    AppLocalizations.of(context)!.home_title_2,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Explore all the most exiting ways to manage your todo with an interactive UI',
+                    AppLocalizations.of(context)!.home_subtitle,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: const Color(0xff9D9AB4),
                         ),
@@ -61,9 +62,9 @@ class HomePage extends StatelessWidget {
                           borderRadius: 8,
                           padding: const EdgeInsets.all(16),
                           backgroundColor: Colors.white,
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                          child: Text(
+                            AppLocalizations.of(context)!.sign_up,
+                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -76,9 +77,9 @@ class HomePage extends StatelessWidget {
                           backgroundColor: const Color(0xffF1F0F6),
                           borderRadius: 8,
                           padding: const EdgeInsets.all(16),
-                          child: const Text(
-                            'Sign in',
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.sign_in,
+                            style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),

@@ -10,7 +10,8 @@ final cloudFirestoreRepositoryProvider = Provider<ICloudDatabaseRepository>((ref
 });
 
 final getTodosProvider = StreamProvider.autoDispose<QuerySnapshot>((ref) {
-  return ref.read(cloudFirestoreRepositoryProvider).getTodos();
+  final uid = ref.read(authRepositoryProvider).currentUser()?.uid;
+  return ref.read(cloudFirestoreRepositoryProvider).getTodosByUserId(uid ?? '');
 });
 
 final getUserProfileProvider = FutureProvider.autoDispose<UserModel>((ref) async {
@@ -24,8 +25,8 @@ class CloudFirestoreRepository implements ICloudDatabaseRepository {
   const CloudFirestoreRepository(this._db, this._ref);
 
   @override
-  Stream<QuerySnapshot> getTodos() {
-    return _db.collection('todos').snapshots();
+  Stream<QuerySnapshot> getTodosByUserId(String userId) {
+    return _db.collection('todos').where('userId', isEqualTo: userId).snapshots();
   }
 
   @override

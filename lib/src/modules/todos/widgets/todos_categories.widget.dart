@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/src/core/utils/theme_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final categories = ['Business', 'Personal', 'Reading', 'Hang out'];
 
@@ -15,7 +16,7 @@ class TodoCategories extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "CATEGORIES",
+          AppLocalizations.of(context)!.categories.toUpperCase(),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 16),
@@ -38,7 +39,7 @@ class TodoCategories extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('20 tasks', style: Theme.of(context).textTheme.titleSmall),
+                    Text('20 ${AppLocalizations.of(context)!.tasks}', style: Theme.of(context).textTheme.titleSmall),
                     const SizedBox(height: 16),
                     Text(
                       category,

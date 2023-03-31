@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SocialMediaLogin extends ConsumerWidget {
   const SocialMediaLogin({super.key});
@@ -9,19 +9,19 @@ class SocialMediaLogin extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        const Row(
+        Row(
           children: [
-            Expanded(child: Divider()),
-            SizedBox(width: 8),
+            const Expanded(child: Divider()),
+            const SizedBox(width: 8),
             Text(
-              'Or continue with',
-              style: TextStyle(
+              AppLocalizations.of(context)!.or_continue_with,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xff9D9AB4),
               ),
             ),
-            SizedBox(width: 8),
-            Expanded(child: Divider()),
+            const SizedBox(width: 8),
+            const Expanded(child: Divider()),
           ],
         ),
         const SizedBox(height: 32),

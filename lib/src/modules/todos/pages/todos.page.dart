@@ -6,8 +6,9 @@ import 'package:flutter_cloud_firestore/src/modules/add_todo/pages/add_todo.widg
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_search_delegate.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_side_menu.widget.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_header.widget.dart';
-import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_item.widget.dart';
+import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_listview.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class TodosPage extends ConsumerWidget {
@@ -92,11 +93,11 @@ class TodosPage extends ConsumerWidget {
                           const TodosHeader(),
                           const SizedBox(height: 40),
                           Text(
-                            "TODAY'S TASKS",
+                            AppLocalizations.of(context)!.todos_listview_section_title.toUpperCase(),
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           const SizedBox(height: 16),
-                          const HomeTodosListView(),
+                          const TodosListView(),
                         ],
                       ),
                     ),
@@ -111,38 +112,9 @@ class TodosPage extends ConsumerWidget {
           ? const SizedBox.shrink()
           : FloatingActionButton(
               onPressed: displayModal,
-              tooltip: 'Add new todo',
+              tooltip: AppLocalizations.of(context)!.add_new_todo_floating_action_button,
               child: const Icon(Icons.add),
             ),
-    );
-  }
-}
-
-class HomeTodosListView extends ConsumerWidget {
-  const HomeTodosListView({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final todosAsyncValue = ref.watch(getTodosProvider);
-
-    return todosAsyncValue.when(
-      data: (data) {
-        final docs = data.docs;
-        final todos = docs.map((e) => Todo.fromJson(e.data() as Map<String, dynamic>)).toList();
-
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          itemCount: todos.length,
-          itemBuilder: (context, index) {
-            final todo = todos[index];
-
-            return TodoListItem(todo: todo, docId: docs[index].id);
-          },
-        );
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stackTrace) => Text(error.toString()),
     );
   }
 }
