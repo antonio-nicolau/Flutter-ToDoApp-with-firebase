@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
-import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
-import 'package:flutter_cloud_firestore/core/utils/theme_preferences.dart';
+import 'package:flutter_cloud_firestore/src/core/models/todo.model.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
+import 'package:flutter_cloud_firestore/src/core/utils/theme_preferences.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todo_date_picker.widget.dart';
-import 'package:flutter_cloud_firestore/core/widgets/todo_textfield.widget.dart';
+import 'package:flutter_cloud_firestore/src/core/widgets/todo_textfield.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -27,7 +27,7 @@ class AddTodo extends ConsumerWidget {
       final title = titleEdittingController.text.trim();
 
       final todo = Todo(title: title, schedule: selectedDate ?? DateTime.now());
-      ref.read(todoCloudFirestoreRepositoryProvider).add(todo);
+      ref.read(cloudFirestoreRepositoryProvider).add(todo);
       Navigator.pop(context);
     }
 

@@ -1,27 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
-import 'package:flutter_cloud_firestore/core/models/user.model.dart';
-import 'package:flutter_cloud_firestore/core/repositories/auth.repository.dart';
-import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.interface.dart';
+import 'package:flutter_cloud_firestore/src/core/models/todo.model.dart';
+import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/auth.repository.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final todoCloudFirestoreRepositoryProvider = Provider<ICloudFirestoreRepository>((ref) {
-  return TodoCloudFirestoreRepository(FirebaseFirestore.instance, ref);
+final cloudFirestoreRepositoryProvider = Provider<ICloudDatabaseRepository>((ref) {
+  return CloudFirestoreRepository(FirebaseFirestore.instance, ref);
 });
 
 final getTodosProvider = StreamProvider.autoDispose<QuerySnapshot>((ref) {
-  return ref.read(todoCloudFirestoreRepositoryProvider).getTodos();
+  return ref.read(cloudFirestoreRepositoryProvider).getTodos();
 });
 
 final getUserProfileProvider = FutureProvider<UserModel>((ref) async {
-  return ref.read(todoCloudFirestoreRepositoryProvider).getUserProfile();
+  return ref.read(cloudFirestoreRepositoryProvider).getUserProfile();
 });
 
-class TodoCloudFirestoreRepository implements ICloudFirestoreRepository {
+class CloudFirestoreRepository implements ICloudDatabaseRepository {
   final FirebaseFirestore _db;
   final Ref _ref;
 
-  const TodoCloudFirestoreRepository(this._db, this._ref);
+  const CloudFirestoreRepository(this._db, this._ref);
 
   @override
   Stream<QuerySnapshot> getTodos() {

@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/core/repositories/auth.repository.dart';
-import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
-import 'package:flutter_cloud_firestore/core/router/app.route.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/auth.repository.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
+import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final menuOpenedProvider = StateProvider<bool>((ref) {

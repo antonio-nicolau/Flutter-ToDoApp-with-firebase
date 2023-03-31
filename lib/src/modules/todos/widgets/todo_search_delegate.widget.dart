@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
+import 'package:flutter_cloud_firestore/src/core/models/todo.model.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   CustomSearchDelegate(this.todos);

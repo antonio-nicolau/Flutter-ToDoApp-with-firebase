@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
 import 'package:flutter_cloud_firestore/src/modules/todos/widgets/todos_categories.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

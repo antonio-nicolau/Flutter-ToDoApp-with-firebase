@@ -1,14 +1,14 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_cloud_firestore/core/models/user.model.dart';
-import 'package:flutter_cloud_firestore/core/repositories/auth.repository.interface.dart';
-import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
-import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.interface.dart';
+import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/auth.repository.interface.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepositoryProvider = Provider<IAuthRepository>((ref) {
-  final firestoreRepository = ref.read(todoCloudFirestoreRepositoryProvider);
+  final firestoreRepository = ref.read(cloudFirestoreRepositoryProvider);
   return AuthRepository(FirebaseAuth.instance, firestoreRepository);
 });
 
@@ -29,7 +29,7 @@ final isAuthenticatedProvider = StateProvider<bool>((ref) {
 
 class AuthRepository implements IAuthRepository {
   final FirebaseAuth _firebaseAuth;
-  final ICloudFirestoreRepository _firestoreRepository;
+  final ICloudDatabaseRepository _firestoreRepository;
 
   AuthRepository(this._firebaseAuth, this._firestoreRepository);
 

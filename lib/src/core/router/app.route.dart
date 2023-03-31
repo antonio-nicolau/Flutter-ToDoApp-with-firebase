@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/core/router/auth_guard.dart';
+import 'package:flutter_cloud_firestore/src/core/router/auth_guard.dart';
 import 'package:flutter_cloud_firestore/src/modules/auth/auth.page.dart';
 import 'package:flutter_cloud_firestore/src/modules/home/home.page.dart';
 import 'package:flutter_cloud_firestore/src/modules/register/pages/register.page.dart';

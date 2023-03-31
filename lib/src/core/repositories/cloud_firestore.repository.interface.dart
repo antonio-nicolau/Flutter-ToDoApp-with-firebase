@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
-import 'package:flutter_cloud_firestore/core/models/user.model.dart';
+import 'package:flutter_cloud_firestore/src/core/models/todo.model.dart';
+import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
 
-abstract class ICloudFirestoreRepository {
+abstract class ICloudDatabaseRepository {
   Stream<QuerySnapshot> getTodos();
   Future<void> add(Todo todo);
   Future<void> delete(String uuid);

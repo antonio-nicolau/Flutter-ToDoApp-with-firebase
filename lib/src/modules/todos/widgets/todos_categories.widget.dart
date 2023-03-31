@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/core/utils/app_theme.dart';
+import 'package:flutter_cloud_firestore/src/core/utils/app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final categories = ['Business', 'Personal', 'Reading', 'Hang out'];

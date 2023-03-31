@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/core/models/todo.model.dart';
-import 'package:flutter_cloud_firestore/core/repositories/cloud_firestore.repository.dart';
+import 'package:flutter_cloud_firestore/src/core/models/todo.model.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TodoListItem extends ConsumerWidget {
@@ -61,7 +61,7 @@ class TodoListItem extends ConsumerWidget {
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             value: todo.done,
             onChanged: (value) {
-              ref.read(todoCloudFirestoreRepositoryProvider).updateTodo(
+              ref.read(cloudFirestoreRepositoryProvider).updateTodo(
                     docId,
                     todo.copyWith(done: value),
                   );
@@ -71,7 +71,7 @@ class TodoListItem extends ConsumerWidget {
         ),
       ),
       onDismissed: (direction) {
-        ref.read(todoCloudFirestoreRepositoryProvider).delete(docId);
+        ref.read(cloudFirestoreRepositoryProvider).delete(docId);
       },
     );
   }

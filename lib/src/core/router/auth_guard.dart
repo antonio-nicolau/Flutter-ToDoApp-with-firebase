@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_cloud_firestore/core/repositories/auth.repository.dart';
-import 'package:flutter_cloud_firestore/core/router/app.route.dart';
+import 'package:flutter_cloud_firestore/src/core/repositories/auth.repository.dart';
+import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthGuard extends AutoRouteGuard {
