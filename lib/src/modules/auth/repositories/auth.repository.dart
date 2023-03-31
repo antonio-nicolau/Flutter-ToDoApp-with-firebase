@@ -1,12 +1,13 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_cloud_firestore/src/core/constants/enums.dart';
 import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
 import 'package:flutter_cloud_firestore/src/modules/auth/repositories/auth.repository.interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepositoryProvider = Provider<IAuthRepository>((ref) {
-  return AuthRepository(FirebaseAuth.instance);
+  return AuthRepository(FirebaseAuth.instance, ref);
 });
 
 final authStatusProvider = StreamProvider<String?>((ref) {
@@ -24,17 +25,26 @@ final isAuthenticatedProvider = StateProvider<bool>((ref) {
   return ref.read(authRepositoryProvider).currentUser()?.email != null;
 });
 
+final authRequestStatusProvider = StateProvider.autoDispose<RequestStatus>((ref) {
+  return RequestStatus.none;
+});
+
 class AuthRepository implements IAuthRepository {
   final FirebaseAuth _firebaseAuth;
+  final Ref _ref;
 
-  AuthRepository(this._firebaseAuth);
+  AuthRepository(this._firebaseAuth, this._ref);
 
   @override
   Future<bool> signInWithEmailAndPassword(UserModel user) async {
+    _ref.read(authRequestStatusProvider.notifier).state = RequestStatus.loading;
     try {
       final response = await _firebaseAuth.signInWithEmailAndPassword(email: user.email, password: user.password);
+      _ref.read(authRequestStatusProvider.notifier).state = RequestStatus.success;
       return response.user != null;
     } on FirebaseAuthException catch (e) {
+      _ref.read(authRequestStatusProvider.notifier).state = RequestStatus.error;
+
       switch (e.code) {
         case 'user-not-found':
           break;
@@ -46,6 +56,7 @@ class AuthRepository implements IAuthRepository {
       }
       log(e.code);
     } catch (e) {
+      _ref.read(authRequestStatusProvider.notifier).state = RequestStatus.error;
       log(e.toString());
     }
     return false;

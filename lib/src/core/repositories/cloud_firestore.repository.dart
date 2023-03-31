@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_cloud_firestore/src/core/models/todo.model.dart';
 import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
-import 'package:flutter_cloud_firestore/src/core/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.interface.dart';
+import 'package:flutter_cloud_firestore/src/modules/auth/repositories/auth.repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final cloudFirestoreRepositoryProvider = Provider<ICloudDatabaseRepository>((ref) {
@@ -13,7 +13,7 @@ final getTodosProvider = StreamProvider.autoDispose<QuerySnapshot>((ref) {
   return ref.read(cloudFirestoreRepositoryProvider).getTodos();
 });
 
-final getUserProfileProvider = FutureProvider<UserModel>((ref) async {
+final getUserProfileProvider = FutureProvider.autoDispose<UserModel>((ref) async {
   return ref.read(cloudFirestoreRepositoryProvider).getUserProfile();
 });
 

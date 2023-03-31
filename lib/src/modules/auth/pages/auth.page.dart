@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cloud_firestore/src/core/constants/enums.dart';
 import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
 import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_elevated_button.widget.dart';
@@ -14,6 +15,7 @@ class AuthPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final requestStatus = ref.watch(authRequestStatusProvider);
     final emailEdittingController = TextEditingController();
     final passwordEdittingController = TextEditingController();
 
@@ -32,6 +34,14 @@ class AuthPage extends ConsumerWidget {
         }
       }
     }
+
+    ref.listen<RequestStatus>(authRequestStatusProvider, (previous, next) {
+      if (next == RequestStatus.error) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Email or password incorrect'),
+        ));
+      }
+    });
 
     return Scaffold(
       backgroundColor: const Color(0xffF1F0F6),
@@ -86,7 +96,7 @@ class AuthPage extends ConsumerWidget {
                   backgroundColor: const Color(0xffE1372D),
                   elevation: 0,
                   onPressed: signInWithEmailAndPassword,
-                  child: const Text('Sign in'),
+                  child: requestStatus != RequestStatus.loading ? const Text('Sign in') : buttonSpinner(),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 40, bottom: 40),

@@ -11,6 +11,7 @@ class TodoElevatedButton extends ConsumerWidget {
     this.borderSide,
     this.elevation,
     this.backgroundColor,
+    this.enable = true,
   });
 
   final Function() onPressed;
@@ -20,11 +21,12 @@ class TodoElevatedButton extends ConsumerWidget {
   final BorderSide? borderSide;
   final Color? backgroundColor;
   final double? elevation;
+  final bool enable;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: enable ? onPressed : () {},
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(backgroundColor),
         elevation: MaterialStateProperty.all(elevation),
@@ -39,4 +41,14 @@ class TodoElevatedButton extends ConsumerWidget {
       child: child,
     );
   }
+}
+
+Widget buttonSpinner() {
+  return const Center(
+    child: SizedBox(
+      width: 16,
+      height: 16,
+      child: CircularProgressIndicator(),
+    ),
+  );
 }

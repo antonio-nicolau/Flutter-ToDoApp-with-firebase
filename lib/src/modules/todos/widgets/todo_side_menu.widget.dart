@@ -79,7 +79,7 @@ class TodoSideMenu extends ConsumerWidget {
             titleColor: Colors.red,
             onTap: () {
               ref.read(authRepositoryProvider).logout();
-              context.router.push(const AuthRoute());
+              context.router.push(const HomeRoute());
               ref.invalidate(sideMenuOpenedProvider);
             },
           ),
