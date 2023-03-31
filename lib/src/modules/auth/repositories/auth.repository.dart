@@ -2,14 +2,11 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
-import 'package:flutter_cloud_firestore/src/core/repositories/auth.repository.interface.dart';
-import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
-import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.interface.dart';
+import 'package:flutter_cloud_firestore/src/modules/auth/repositories/auth.repository.interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepositoryProvider = Provider<IAuthRepository>((ref) {
-  final firestoreRepository = ref.read(cloudFirestoreRepositoryProvider);
-  return AuthRepository(FirebaseAuth.instance, firestoreRepository);
+  return AuthRepository(FirebaseAuth.instance);
 });
 
 final authStatusProvider = StreamProvider<String?>((ref) {
@@ -29,9 +26,8 @@ final isAuthenticatedProvider = StateProvider<bool>((ref) {
 
 class AuthRepository implements IAuthRepository {
   final FirebaseAuth _firebaseAuth;
-  final ICloudDatabaseRepository _firestoreRepository;
 
-  AuthRepository(this._firebaseAuth, this._firestoreRepository);
+  AuthRepository(this._firebaseAuth);
 
   @override
   Future<bool> signInWithEmailAndPassword(UserModel user) async {
@@ -67,31 +63,4 @@ class AuthRepository implements IAuthRepository {
 
   @override
   User? currentUser() => _firebaseAuth.currentUser;
-
-  @override
-  Future<UserModel?> createUserWithEmailAndPassword(UserModel user) async {
-    final credential = await _firebaseAuth.createUserWithEmailAndPassword(
-      email: user.email,
-      password: user.password,
-    );
-
-    if (credential.user != null) return user.copyWith(id: credential.user?.uid);
-
-    return null;
-  }
-
-  @override
-  Future<void> signUpWithEmailAndPassword(UserModel user) async {
-    try {
-      final response = await createUserWithEmailAndPassword(user);
-
-      if (response != null) {
-        await _firestoreRepository.saveUserProfile(response);
-      }
-    } on FirebaseAuthException catch (e) {
-      log('An error while creating user: ${e.message} - ${e.code}');
-    } catch (e) {
-      log(e.toString());
-    }
-  }
 }

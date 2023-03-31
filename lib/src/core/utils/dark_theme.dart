@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData darkTheme(BuildContext context) {
   return ThemeData(
+    scaffoldBackgroundColor: const Color(0xff000000),
     colorScheme: const ColorScheme.dark(secondary: Color(0xff2643C4)),
     primaryColor: const Color(0xff000000),
     indicatorColor: const Color(0xff0E1D36),
@@ -11,6 +12,7 @@ ThemeData darkTheme(BuildContext context) {
     dividerColor: Colors.white,
     focusColor: const Color(0xff0B2512),
     disabledColor: Colors.grey,
+    unselectedWidgetColor: const Color(0xff000000),
     iconTheme: const IconThemeData(color: Colors.white),
     cardColor: const Color(0xFF151515),
     brightness: Brightness.dark,

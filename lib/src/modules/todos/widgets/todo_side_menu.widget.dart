@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cloud_firestore/src/core/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/src/core/repositories/cloud_firestore.repository.dart';
 import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
+import 'package:flutter_cloud_firestore/src/modules/auth/repositories/auth.repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final menuOpenedProvider = StateProvider<bool>((ref) {
+final sideMenuOpenedProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
 });
 
@@ -59,17 +59,17 @@ class TodoSideMenu extends ConsumerWidget {
           ),
           MyListTile(
             icon: Icons.category_outlined,
-            title: "Templates",
+            title: "Categories",
             onTap: () {},
           ),
           MyListTile(
             icon: Icons.analytics,
-            title: "Templates",
+            title: "Analytics",
             onTap: () {},
           ),
           MyListTile(
             icon: Icons.settings,
-            title: "Templates",
+            title: "Settings",
             onTap: () {},
           ),
           MyListTile(
@@ -80,6 +80,7 @@ class TodoSideMenu extends ConsumerWidget {
             onTap: () {
               ref.read(authRepositoryProvider).logout();
               context.router.push(const AuthRoute());
+              ref.invalidate(sideMenuOpenedProvider);
             },
           ),
         ],

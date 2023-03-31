@@ -15,7 +15,8 @@ class TodosPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isOpen = ref.watch(menuOpenedProvider);
+    final screenSize = MediaQuery.of(context).size;
+    final isSideMenuOpened = ref.watch(sideMenuOpenedProvider);
     final todosAsyncValue = ref.watch(getTodosProvider);
 
     void displayModal() {
@@ -25,7 +26,7 @@ class TodosPage extends ConsumerWidget {
         context: context,
         builder: (context) {
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.85,
+            height: screenSize.height * 0.85,
             child: AddTodo(),
           );
         },
@@ -35,7 +36,7 @@ class TodosPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: SizedBox(
-        width: MediaQuery.of(context).size.width,
+        width: screenSize.width,
         child: Stack(
           children: [
             const Positioned(
@@ -44,10 +45,10 @@ class TodosPage extends ConsumerWidget {
               child: TodoSideMenu(),
             ),
             AnimatedPositioned(
-              width: isOpen ? MediaQuery.of(context).size.width : MediaQuery.of(context).size.width,
-              height: isOpen ? MediaQuery.of(context).size.height * 0.85 : MediaQuery.of(context).size.height,
-              top: isOpen ? 50.0 : 0,
-              right: isOpen ? -260 : 0,
+              width: isSideMenuOpened ? screenSize.width : screenSize.width,
+              height: isSideMenuOpened ? screenSize.height * 0.85 : screenSize.height,
+              top: isSideMenuOpened ? 50.0 : 0,
+              right: isSideMenuOpened ? -260 : 0,
               duration: const Duration(milliseconds: 600),
               curve: Curves.fastOutSlowIn,
               child: ClipRRect(
@@ -61,9 +62,9 @@ class TodosPage extends ConsumerWidget {
                     backgroundColor: Theme.of(context).primaryColor,
                     leading: IconButton(
                       onPressed: () {
-                        ref.read(menuOpenedProvider.notifier).state = !ref.read(menuOpenedProvider);
+                        ref.read(sideMenuOpenedProvider.notifier).state = !ref.read(sideMenuOpenedProvider);
                       },
-                      icon: Icon(isOpen ? Icons.close_rounded : Icons.menu),
+                      icon: Icon(isSideMenuOpened ? Icons.close_rounded : Icons.menu),
                     ),
                     actions: [
                       IconButton(
@@ -106,7 +107,7 @@ class TodosPage extends ConsumerWidget {
           ],
         ),
       ),
-      floatingActionButton: isOpen
+      floatingActionButton: isSideMenuOpened
           ? const SizedBox.shrink()
           : FloatingActionButton(
               onPressed: displayModal,

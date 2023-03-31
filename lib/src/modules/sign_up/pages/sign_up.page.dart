@@ -1,34 +1,38 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cloud_firestore/src/core/models/user.model.dart';
-import 'package:flutter_cloud_firestore/src/core/repositories/auth.repository.dart';
 import 'package:flutter_cloud_firestore/src/core/router/app.route.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_elevated_button.widget.dart';
-import 'package:flutter_cloud_firestore/src/modules/auth/widgets/social_media.widget.dart';
+import 'package:flutter_cloud_firestore/src/core/widgets/social_media.widget.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_textfield.widget.dart';
+import 'package:flutter_cloud_firestore/src/modules/sign_up/repositories/sign_up.repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class AuthPage extends ConsumerWidget {
-  const AuthPage({super.key});
+class SignUpPage extends ConsumerWidget {
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final nameEdittingController = TextEditingController();
     final emailEdittingController = TextEditingController();
     final passwordEdittingController = TextEditingController();
 
-    Future<void> signInWithEmailAndPassword() async {
+    Future<void> register() async {
+      final name = nameEdittingController.text.trim();
       final email = emailEdittingController.text.trim();
       final password = passwordEdittingController.text.trim();
 
-      final user = UserModel(email: email, password: password);
+      final user = UserModel(
+        name: name,
+        email: email,
+        password: password,
+      );
 
-      final response = await ref.read(authRepositoryProvider).signInWithEmailAndPassword(user);
+      await ref.read(signUpRepositoryProvider).signUpWithEmailAndPassword(user);
 
       if (context.mounted) {
-        if (response) {
-          context.router.push(const TodosRoute());
-        }
+        context.router.push(const AuthRoute());
       }
     }
 
@@ -42,15 +46,21 @@ class AuthPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Hello Again!',
+                  "Hi here! Let's",
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  "Welcome back you've been missed",
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  "get started",
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
                   textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 30),
+                TodoTextField(
+                  controller: nameEdittingController,
+                  label: 'Your name',
+                  labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
                 ),
                 const SizedBox(height: 30),
                 TodoTextField(
@@ -68,45 +78,61 @@ class AuthPage extends ConsumerWidget {
                   labelTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: const Color(0xff9D9AB4)),
                 ),
                 const SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Recover Password',
-                      style: TextStyle(
-                        color: Color(0xff9D9AB4),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
+                  child: Wrap(
+                    children: [
+                      Text(
+                        'By singing up, you agree to the',
+                        style: TextStyle(color: Color(0xff9D9AB4)),
                       ),
-                    ),
+                      SizedBox(width: 8),
+                      UnderlineText(text: 'Terms of Service'),
+                      SizedBox(width: 8),
+                      Text(
+                        'and',
+                        style: TextStyle(color: Color(0xff9D9AB4)),
+                      ),
+                      SizedBox(width: 8),
+                      UnderlineText(text: 'Privacy Policy'),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 16),
                 TodoElevatedButton(
                   backgroundColor: const Color(0xffE1372D),
                   elevation: 0,
-                  onPressed: signInWithEmailAndPassword,
-                  child: const Text('Sign in'),
+                  onPressed: register,
+                  child: const Text('Sign up'),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 40, bottom: 40),
                   child: SocialMediaLogin(),
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Not a member?'),
-                    SizedBox(width: 10),
-                    Text(
-                      'Register now',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ],
-                )
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class UnderlineText extends StatelessWidget {
+  const UnderlineText({super.key, required this.text, this.textStyle});
+
+  final String text;
+  final TextStyle? textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: textStyle ??
+          const TextStyle(
+            color: Color(0xff9D9AB4),
+            decoration: TextDecoration.underline,
+          ),
     );
   }
 }

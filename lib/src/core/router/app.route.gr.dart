@@ -26,16 +26,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthPage(),
       );
     },
-    RegisterRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const RegisterPage(),
-      );
-    },
     TodosRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const TodosPage(),
+      );
+    },
+    SignUpRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SignUpPage(),
       );
     },
   };
@@ -70,20 +70,6 @@ class AuthRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [RegisterPage]
-class RegisterRoute extends PageRouteInfo<void> {
-  const RegisterRoute({List<PageRouteInfo>? children})
-      : super(
-          RegisterRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'RegisterRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [TodosPage]
 class TodosRoute extends PageRouteInfo<void> {
   const TodosRoute({List<PageRouteInfo>? children})
@@ -93,6 +79,20 @@ class TodosRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TodosRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SignUpPage]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute({List<PageRouteInfo>? children})
+      : super(
+          SignUpRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SignUpRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

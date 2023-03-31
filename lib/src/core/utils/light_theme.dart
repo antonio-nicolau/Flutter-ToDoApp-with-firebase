@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 ThemeData lightTheme(BuildContext context) {
   return ThemeData(
+    scaffoldBackgroundColor: const Color(0xffF1F0F6),
     colorScheme: const ColorScheme.light(secondary: Colors.blue),
     primaryColor: const Color(0xffF1F0F6),
     indicatorColor: const Color(0xffCBDCF8),
     hintColor: const Color(0xffEECED3),
-    highlightColor: const Color(0xffFCE192),
     dividerColor: const Color(0xff9D9AB4),
     focusColor: const Color(0xffA8DAB5),
     disabledColor: Colors.grey,
