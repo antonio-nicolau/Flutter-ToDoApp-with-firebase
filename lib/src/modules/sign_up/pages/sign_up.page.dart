@@ -24,16 +24,18 @@ class SignUpPage extends ConsumerWidget {
     final passwordController = TextEditingController();
 
     Future<void> signUpWithPassword() async {
-      final name = nameController.text.trim();
-      final email = emailController.text.trim();
-      final password = passwordController.text.trim();
+      if (_formKey.currentState?.validate() == true) {
+        final name = nameController.text.trim();
+        final email = emailController.text.trim();
+        final password = passwordController.text.trim();
 
-      final user = UserModel(name: name, email: email, password: password);
+        final user = UserModel(name: name, email: email, password: password);
 
-      await ref.read(signUpRepositoryProvider).signUpWithEmailAndPassword(user);
+        await ref.read(signUpRepositoryProvider).signUpWithEmailAndPassword(user);
 
-      if (context.mounted && ref.read(signUpRequestStatusProvider) == RequestStatus.success) {
-        context.router.push(const AuthRoute());
+        if (context.mounted && ref.read(signUpRequestStatusProvider) == RequestStatus.success) {
+          context.router.push(const AuthRoute());
+        }
       }
     }
 

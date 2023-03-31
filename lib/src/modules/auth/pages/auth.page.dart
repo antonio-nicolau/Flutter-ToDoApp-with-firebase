@@ -22,17 +22,19 @@ class AuthPage extends ConsumerWidget {
     final passwordController = TextEditingController();
 
     Future<void> signInWithEmailAndPassword() async {
-      final email = emailController.text.trim();
-      final password = passwordController.text.trim();
+      if (_formKey.currentState?.validate() == true) {
+        final email = emailController.text.trim();
+        final password = passwordController.text.trim();
 
-      final user = UserModel(email: email, password: password);
+        final user = UserModel(email: email, password: password);
 
-      final response = await ref.read(authRepositoryProvider).signInWithEmailAndPassword(user);
+        final response = await ref.read(authRepositoryProvider).signInWithEmailAndPassword(user);
 
-      if (context.mounted) {
-        if (response) {
-          ref.read(isAuthenticatedProvider.notifier).state = true;
-          context.router.push(const TodosRoute());
+        if (context.mounted) {
+          if (response) {
+            ref.read(isAuthenticatedProvider.notifier).state = true;
+            context.router.push(const TodosRoute());
+          }
         }
       }
     }

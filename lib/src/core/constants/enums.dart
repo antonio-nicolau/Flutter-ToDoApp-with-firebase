@@ -4,3 +4,9 @@ enum RequestStatus {
   success,
   error,
 }
+
+enum TodoTextInputType {
+  email,
+  password,
+  text,
+}

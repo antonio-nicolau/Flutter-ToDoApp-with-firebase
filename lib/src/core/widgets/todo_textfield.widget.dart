@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cloud_firestore/src/core/constants/enums.dart';
+import 'package:flutter_cloud_firestore/src/core/utils/input_validator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-enum TodoTextInputType { email, date, password, text, profile }
 
 class TodoTextField extends ConsumerWidget {
   TodoTextField({
@@ -34,6 +34,7 @@ class TodoTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final inputValidator = InputValidator();
     final showPassword = ref.watch(showPasswordProvider);
     final isPasswordField = textInputType == TodoTextInputType.password;
 
@@ -77,6 +78,9 @@ class TodoTextField extends ConsumerWidget {
       maxLines: maxLines ?? 1,
       obscureText: isPasswordField && !showPassword,
       onChanged: onChanged,
+      validator: (value) {
+        return _getInputValidator(value, inputValidator);
+      },
     );
   }
 
@@ -93,6 +97,19 @@ class TodoTextField extends ConsumerWidget {
 
       default:
         return TextInputType.text;
+    }
+  }
+
+  String? _getInputValidator(String? value, InputValidator inputValidator) {
+    switch (textInputType) {
+      case TodoTextInputType.text:
+        return value?.isEmpty == true ? 'Field cannot be empty' : null;
+      case TodoTextInputType.email:
+        return inputValidator.validate(email: value);
+      case TodoTextInputType.password:
+        return inputValidator.validate(password: value);
+      default:
+        return null;
     }
   }
 }

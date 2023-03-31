@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cloud_firestore/src/core/constants/enums.dart';
 import 'package:flutter_cloud_firestore/src/core/widgets/todo_textfield.widget.dart';
 
 class AuthForm extends StatelessWidget {
