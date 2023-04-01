@@ -35,7 +35,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      locale: const Locale('pt'),
+      locale: const Locale('en'),
       supportedLocales: const [
         Locale('en'),
         Locale('pt'),

@@ -10,7 +10,7 @@ final cloudFirestoreRepositoryProvider = Provider<ICloudDatabaseRepository>((ref
 });
 
 final getTodosProvider = StreamProvider.autoDispose<QuerySnapshot>((ref) {
-  final uid = ref.read(authRepositoryProvider).currentUser()?.uid;
+  final uid = ref.watch(currentUserProvider)?.uid;
   return ref.read(cloudFirestoreRepositoryProvider).getTodosByUserId(uid ?? '');
 });
 

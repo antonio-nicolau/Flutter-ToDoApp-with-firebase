@@ -83,7 +83,9 @@ class TodoSideMenu extends ConsumerWidget {
               context.router.push(const HomeRoute());
               ref.invalidate(sideMenuOpenedProvider);
               ref.invalidate(cloudFirestoreRepositoryProvider);
+              ref.invalidate(getUserProfileProvider);
               ref.invalidate(getTodosProvider);
+              ref.invalidate(isAuthenticatedProvider);
             },
           ),
         ],

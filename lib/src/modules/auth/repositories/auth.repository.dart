@@ -10,10 +10,15 @@ final authRepositoryProvider = Provider<IAuthRepository>((ref) {
   return AuthRepository(FirebaseAuth.instance, ref);
 });
 
+final currentUserProvider = StateProvider<User?>((ref) {
+  return ref.read(authRepositoryProvider).currentUser();
+});
+
 final authStatusProvider = StreamProvider<String?>((ref) {
   ref.watch(authRepositoryProvider).authStatus().listen((event) {
     print('event:${event?.email}');
     ref.read(isAuthenticatedProvider.notifier).state = event?.email != null;
+    ref.read(currentUserProvider.notifier).state = event;
   });
 
   return ref.watch(authRepositoryProvider).authStatus().map((user) {
