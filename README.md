@@ -3,8 +3,8 @@
 A Flutter TODO App to demonstrate how to work with Rivepord, query Firebase firestore documents, authenticate users with Firebase Auth, manage routers with auto_router, implement dark/light mode
 
 Features:
-- Login/SignUp
-- Create tasks
+- Login/SignUp with Firebase
+- Create TODO
 - Dark/Light mode
 - Internalization (english/portuguese)
 - Social Signup (google, facebook and apple) - TO BE IMPLEMENTED
